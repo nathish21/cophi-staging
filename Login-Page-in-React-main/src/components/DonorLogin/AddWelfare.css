@@ -1,0 +1,169 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 100px;
+  background: #fff;
+  width: 90%;
+  max-width: 400px;
+  padding: 60px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.transaction-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.transaction-button {
+  padding: 10px 20px;
+  background-color: #4c00b4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.transaction-button:hover {
+  background-color: #3c009d;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.text {
+  color: #3c009d;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.underline {
+  width: 40px;
+  height: 4px;
+  background: #3c009d;
+  border-radius: 9px;
+}
+
+.add-icon-container {
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.add-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.popup-content .header {
+  margin-bottom: 20px;
+}
+
+.input-field {
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #3c009d;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.popup-buttons button {
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  background: #4c00b4;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+}
+
+.popup-buttons button:hover {
+  background: #3c009d;
+}
+
+.welfare-list {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.welfare-item {
+  background: #eaeaea;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.welfare-item h4 {
+  margin: 0;
+  font-size: 18px;
+  color: #3c009d;
+}
+
+.welfare-item p {
+  margin: 5px 0 0;
+  color: #797979;
+  overflow-wrap: break-word;
+}
+
+.show-more-btn {
+  background: transparent;
+  color: blue;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.show-more-btn:hover {
+  color: #3c009d;
+}
