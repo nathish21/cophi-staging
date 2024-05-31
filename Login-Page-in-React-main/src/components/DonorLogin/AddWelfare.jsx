@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddWelfare.css";
 import add_icon from "../Assets/add.png";
@@ -10,6 +10,17 @@ export const AddWelfare = () => {
   const [organizationName, setOrganizationName] = useState("");
   const [welfareList, setWelfareList] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedWelfareList = localStorage.getItem("welfareList");
+    if (savedWelfareList) {
+      setWelfareList(JSON.parse(savedWelfareList));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("welfareList", JSON.stringify(welfareList));
+  }, [welfareList]);
 
   const handleAddClick = () => {
     setShowPopup(true);
@@ -67,9 +78,11 @@ export const AddWelfare = () => {
         <div className="underline"></div>
       </div>
 
-      <div className="add-icon-container" onClick={handleAddClick}>
-        <img src={add_icon} alt="add icon" className="add-icon" />
-      </div>
+      {welfareList.length === 0 && (
+        <div className="add-icon-container" onClick={handleAddClick}>
+          <img src={add_icon} alt="add icon" className="add-icon" />
+        </div>
+      )}
 
       {showPopup && (
         <div className="popup">
@@ -78,13 +91,18 @@ export const AddWelfare = () => {
               <div className="text">Add Welfare Details</div>
               <div className="underline"></div>
             </div>
-            <input
-              type="text"
-              placeholder="Welfare Title"
+            <select
               value={welfareTitle}
               onChange={handleTitleChange}
               className="input-field"
-            />
+            >
+              <option value="" disabled>
+                Select Welfare Title
+              </option>
+              <option value="Child">Child</option>
+              <option value="Women">Women</option>
+              <option value="Education">Education</option>
+            </select>
             <input
               type="text"
               placeholder="Organization Name"

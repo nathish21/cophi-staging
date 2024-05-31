@@ -1,0 +1,27 @@
+/* NgoDetails.css */
+
+.ngo-details-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.ngo-details {
+  color: #333;
+}
+
+.ngo-details h2 {
+  color: #4c00b4;
+  margin-bottom: 10px;
+}
+
+.ngo-details p {
+  margin-bottom: 8px;
+}
+
+.ngo-details p strong {
+  font-weight: bold;
+  margin-right: 5px;
+}
