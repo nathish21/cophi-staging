@@ -1,0 +1,39 @@
+.ngo-details-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 100px;
+  background: #fff;
+  width: 90%;
+  max-width: 400px;
+  padding: 60px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.ngo-details-container h2 {
+  color: #4c00b4;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.ngo-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.ngo-details p {
+  margin: 0;
+  color: #333;
+}
+
+.ngo-details p strong {
+  font-weight: bold;
+  margin-right: 5px;
+}

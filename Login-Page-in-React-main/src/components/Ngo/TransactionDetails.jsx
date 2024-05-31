@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FaTimes } from "react-icons/fa"; // Importing the close icon from react-icons
+import { FaTimes } from "react-icons/fa";
 import "./TransactionDetails.css";
 
 export const TransactionDetails = () => {

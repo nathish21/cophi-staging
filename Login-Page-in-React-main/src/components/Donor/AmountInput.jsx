@@ -23,7 +23,7 @@ export const AmountInput = () => {
 
   const handleClosePopup = () => {
     setShowPopup(false);
-    setSubmittedAmount(null); // Reset submitted amount on popup close
+    setSubmittedAmount(null);
   };
 
   return (

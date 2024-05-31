@@ -6,6 +6,7 @@ import { AmountInput } from "./components/Donor/AmountInput";
 import { NgoLogin } from "./components/Ngo/NgoLogin";
 import { AddWelfare } from "./components/Ngo/AddWelfare";
 import { TransactionDetails } from "./components/Ngo/TransactionDetails";
+import { NgoDetails } from "./components/Ngo/NgoDetails";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/ngo" element={<NgoLogin />} />
         <Route path="/add-welfare" element={<AddWelfare />} />
         <Route path="/transactions" element={<TransactionDetails />} />
+        <Route path="/ngo-details" element={<NgoDetails />} />
       </Routes>
     </Router>
   );

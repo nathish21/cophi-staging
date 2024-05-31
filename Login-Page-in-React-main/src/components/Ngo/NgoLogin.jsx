@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../Donor/DonorLogin.css"
+import "../Donor/DonorLogin.css";
 import email_icon from "../Assets/email.png";
 import password_icon from "../Assets/password.png";
 import { loginUser } from "../../api/userService";
@@ -10,7 +10,6 @@ export const NgoLogin = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [token, setToken] = useState(null);
   const navigate = useNavigate();
 
   const handleLoginClick = async (event) => {
@@ -20,17 +19,22 @@ export const NgoLogin = () => {
 
     try {
       const credentials = { email, password };
-      const data = await loginUser(credentials);
-      // setToken(data.token);
-      console.log("Login successful:", data);
+      const response = await loginUser(credentials);
+      console.log("Login response:", response);
+      sessionStorage.setItem("userId", response.ngoId);
 
-     navigate("/add-welfare");
+      if (response.status === 201) {
+        navigate("/add-welfare");
+      } else if (response.status === 200) {
+        navigate("/ngo-details");
+      } else {
+        setError("Unexpected response status");
+      }
     } catch (error) {
       setError(error.response ? error.response.data.message : error.message);
     } finally {
       setLoading(false);
     }
-    // Navigate to the add welfare details page
   };
 
   return (
@@ -64,9 +68,9 @@ export const NgoLogin = () => {
           </div>
         </div>
         <div className="submit-container">
-          <div className="submit" onClick={handleLoginClick} disabled={loading}>
+          <button className="submit" type="submit" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
-          </div>
+          </button>
           {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
       </form>

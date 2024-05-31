@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddWelfare.css";
 import add_icon from "../Assets/add.png";
-import { getCatalogs } from "../../api/userService";
+import { getCatalogs, updateNgoDetails } from "../../api/userService";
 
 export const AddWelfare = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -10,77 +10,58 @@ export const AddWelfare = () => {
   const [welfareDescription, setWelfareDescription] = useState("");
   const [organizationName, setOrganizationName] = useState("");
   const [welfareList, setWelfareList] = useState([]);
+  const [catalogs, setCatalogs] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const navigate = useNavigate();
-  const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-
-
-  const getcatalogsss = async () => {
-   
-    try {
-  
-      const data = await getCatalogs();
-      // setToken(data.token);
-      console.log("catalogs:", data);
-    } catch (error) {
-      // setError(error.response ? error.response.data.message : error.message);
-    } finally {
-      
-    // Navigate to the add welfare details page
-  };
-  // setLoading(false);
-  }
-  // Navigate to the add welfare details page
-  getcatalogsss()
-
   useEffect(() => {
-    const savedWelfareList = localStorage.getItem("welfareList");
-    if (savedWelfareList) {
-      setWelfareList(JSON.parse(savedWelfareList));
-    }
+    const fetchCatalogs = async () => {
+      try {
+        const data = await getCatalogs();
+        setCatalogs(data);
+      } catch (error) {
+        console.error("Error fetching catalogs:", error);
+      }
+    };
+
+    fetchCatalogs();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("welfareList", JSON.stringify(welfareList));
-  }, [welfareList]);
+  const updateNgo = async () => {
+    try {
+      if (!selectedCategory) {
+        setError("Please select a category.");
+        return;
+      }
 
-  const handleAddClick = () => {
-    setShowPopup(true);
-  };
+      const userdata = {
+        categoryId: selectedCategory.categoryId,
+        categoryName: selectedCategory.categoryName,
+        organizationName: organizationName,
+        welfareDescription: welfareDescription,
+      };
 
-  const handleClosePopup = () => {
-    setShowPopup(false);
-  };
+      const response = await updateNgoDetails(userdata);
 
-  const handleTitleChange = (e) => {
-    setWelfareTitle(e.target.value);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setWelfareDescription(e.target.value);
-  };
-
-  const handleOrganizationNameChange = (e) => {
-    setOrganizationName(e.target.value);
-  };
-
-  const handleSubmit = () => {
-    if (welfareTitle && welfareDescription && organizationName) {
-      setWelfareList([
-        ...welfareList,
-        {
-          title: welfareTitle,
-          description: welfareDescription,
-          organization: organizationName,
-          showMore: false,
-        },
-      ]);
-      setWelfareTitle("");
-      setWelfareDescription("");
-      setOrganizationName("");
-      setShowPopup(false);
+      if (response.status === 200) {
+        console.log("Success");
+        navigate("/ngo-details");
+      } else {
+        setError("Unexpected response status");
+      }
+    } catch (error) {
+      setError(error.response ? error.response.data.message : error.message);
     }
+  };
+
+  const handleSelectChange = (e) => {
+    const selectedCategoryName = e.target.value;
+    const catalog = catalogs.find(
+      (catalog) => catalog.categoryName === selectedCategoryName
+    );
+    setSelectedCategory(catalog);
+    setWelfareTitle(catalog.categoryName);
   };
 
   const toggleShowMore = (index) => {
@@ -88,6 +69,27 @@ export const AddWelfare = () => {
       idx === index ? { ...item, showMore: !item.showMore } : item
     );
     setWelfareList(updatedList);
+  };
+
+  const handleSubmit = async () => {
+    if (welfareTitle && welfareDescription && organizationName) {
+      // setWelfareList([
+      //   ...welfareList,
+      //   {
+      //     title: welfareTitle,
+      //     description: welfareDescription,
+      //     organization: organizationName,
+      //     showMore: false,
+      //   },
+      // ]);
+      // setWelfareTitle("");
+      // setWelfareDescription("");
+      // setOrganizationName("");
+      updateNgo();
+      // setShowPopup(false);
+    } else {
+      setError("Please fill in all the details.");
+    }
   };
 
   const handleTransactionClick = () => {
@@ -102,7 +104,7 @@ export const AddWelfare = () => {
       </div>
 
       {welfareList.length === 0 && (
-        <div className="add-icon-container" onClick={handleAddClick}>
+        <div className="add-icon-container" onClick={() => setShowPopup(true)}>
           <img src={add_icon} alt="add icon" className="add-icon" />
         </div>
       )}
@@ -114,39 +116,43 @@ export const AddWelfare = () => {
               <div className="text">Add Welfare Details</div>
               <div className="underline"></div>
             </div>
+            <input
+              type="text"
+              placeholder="Organization Name"
+              value={organizationName}
+              onChange={(e) => setOrganizationName(e.target.value)}
+              className="input-field"
+            />
+
             <select
-              value={welfareTitle}
-              onChange={handleTitleChange}
+              value={selectedCategory ? selectedCategory.categoryName : ""}
+              onChange={handleSelectChange}
               className="input-field"
             >
               <option value="" disabled>
                 Select Welfare Title
               </option>
-              <option value="Child">Child</option>
-              <option value="Women">Women</option>
-              <option value="Education">Education</option>
+              {catalogs.map((catalog) => (
+                <option key={catalog._id} value={catalog.categoryName}>
+                  {catalog.categoryName}
+                </option>
+              ))}
             </select>
-            <input
-              type="text"
-              placeholder="Organization Name"
-              value={organizationName}
-              onChange={handleOrganizationNameChange}
-              className="input-field"
-            />
+
             <textarea
               placeholder="Welfare Description"
               value={welfareDescription}
-              onChange={handleDescriptionChange}
+              onChange={(e) => setWelfareDescription(e.target.value)}
               className="input-field"
             />
             <div className="popup-buttons">
               <button onClick={handleSubmit}>OK</button>
-              <button onClick={handleClosePopup}>Cancel</button>
+              <button onClick={() => setShowPopup(false)}>Cancel</button>
             </div>
+            {error && <p className="error-message">{error}</p>}
           </div>
         </div>
       )}
-
       <div className="welfare-list">
         {welfareList.map((welfare, index) => (
           <div key={index} className="welfare-item">
