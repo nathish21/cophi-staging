@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddWelfare.css";
 import add_icon from "../Assets/add.png";
+import { getCatalogs } from "../../api/userService";
 
 export const AddWelfare = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -10,6 +11,28 @@ export const AddWelfare = () => {
   const [organizationName, setOrganizationName] = useState("");
   const [welfareList, setWelfareList] = useState([]);
   const navigate = useNavigate();
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+
+
+
+  const getcatalogsss = async () => {
+   
+    try {
+  
+      const data = await getCatalogs();
+      // setToken(data.token);
+      console.log("catalogs:", data);
+    } catch (error) {
+      // setError(error.response ? error.response.data.message : error.message);
+    } finally {
+      
+    // Navigate to the add welfare details page
+  };
+  // setLoading(false);
+  }
+  // Navigate to the add welfare details page
+  getcatalogsss()
 
   useEffect(() => {
     const savedWelfareList = localStorage.getItem("welfareList");
