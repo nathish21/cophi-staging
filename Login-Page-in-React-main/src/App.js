@@ -1,11 +1,11 @@
 import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { DonorLogin } from "./components/DonorLogin/DonorLogin";
-import { AmountInput } from "./components/DonorLogin/AmountInput";
-import { NgoLogin } from "./components/DonorLogin/NgoLogin";
-import { AddWelfare } from "./components/DonorLogin/AddWelfare";
-import { TransactionDetails } from "./components/DonorLogin/TransactionDetails";
+import { DonorLogin } from "./components/Donor/DonorLogin";
+import { AmountInput } from "./components/Donor/AmountInput";
+import { NgoLogin } from "./components/Ngo/NgoLogin";
+import { AddWelfare } from "./components/Ngo/AddWelfare";
+import { TransactionDetails } from "./components/Ngo/TransactionDetails";
 
 function App() {
   return (
